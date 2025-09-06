@@ -1,3 +1,10 @@
+:root {
+  --primary-color: #007bff;
+  --accent-color: #00b7eb;
+  --text-color: #333;
+  --background-color: #fff;
+}
+
 /******* Change Box Model ***************/
 *,
 *:before,
@@ -6,105 +13,164 @@
 }
 
 body {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
-  background-color: #ffffff;
-  color: #222;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
-header, nav, main, footer {
-  padding: 1rem;
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+}
+
+.siteName {
+  font-size: 1.5rem;
+}
+
+.logIn {
+  font-variant: small-caps;
 }
 
 nav {
-  background-color: #0055aa;
+  background-color: black;
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-around;
+  padding: 10px 20px;
 }
 
 nav a {
+  font-family: "Orbitron", sans-serif;
   color: white;
   text-decoration: none;
-  padding: 0.5rem;
 }
 
-.hero {
-  text-align: center;
-  padding: 1rem;
-}
-
-.hero h1 {
-  color: #0055aa;
-  margin-bottom: 0.5rem;
-}
-
-.hero ul {
+nav ul {
+  display: flex;
+  gap: 10px;
   list-style: none;
   padding: 0;
-  color: #0055aa;
 }
 
-.cta {
-  background-color: #0055aa;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
-  cursor: pointer;
+nav ul li:hover {
+  transform: scale(1.05);
 }
 
-.hero img {
-  max-width: 100%;
-  height: auto;
-  margin-top: 1rem;
-}
-
-.upgrades, .reviews {
-  margin-top: 2rem;
-}
-
-.upgrades h2, .reviews h2 {
-  text-align: center;
-  color: #333;
-}
-
-.upgrade-list {
+.overlay {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  margin: 20px auto;
+  max-width: 600px;
+  position: relative;
 }
 
-.upgrade img {
-  width: 100px;
+.delorean-image-index {
+  width: 90%;
   height: auto;
 }
 
-.reviews ul {
-  padding-left: 1rem;
+.text-overlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 10px;
+  border-radius: 5px;
+  color: black;
 }
 
+.text-overlay ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
-@media screen and (min-width: 768px) {
-  .hero {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
+.text-overlay li {
+  font-size: 18px;
+  margin-bottom: 5px;
+  text-shadow: 2px 2px 4px black;
+}
+
+.own-delorean {
+  background-color: lightblue;
+  color: black;
+  padding: 7px 14px;
+  border: none;
+  font-family: Orbitron;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.own-delorean:hover {
+  border: 2px solid #000;
+  transform: scale(1.05);
+}
+
+.upgrade-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+.image-container {
+  background-color: var(--accent-color);
+  border: 2px solid #008cba;
+  padding: 20px;
+  text-align: center;
+}
+
+.image-container img {
+  width: 50px;
+  height: auto;
+}
+
+.review-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 15px;
+}
+
+#delorean-reviews {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.reviews {
+  font-size: 14px;
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+@media (min-width: 768px) {
+  body {
+    background-image: url('/images/site/small_check.jpg');
+    background-size: cover;
+    background-position: center;
   }
 
-  .hero-text {
-    max-width: 50%;
-  }
-
-  .hero-image {
-    max-width: 40%;
-  }
-
-  .upgrade-list {
+  .overlay {
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
+  }
+
+  .text-overlay {
+    position: static;
+    background: none;
+    padding: 0;
+  }
+
+  .upgrade-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .review-container {
+    display: block;
   }
 }
