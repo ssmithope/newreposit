@@ -4,3 +4,107 @@
 *:after {
   box-sizing: border-box;
 }
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  color: #222;
+}
+
+header, nav, main, footer {
+  padding: 1rem;
+}
+
+nav {
+  background-color: #0055aa;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem;
+}
+
+.hero {
+  text-align: center;
+  padding: 1rem;
+}
+
+.hero h1 {
+  color: #0055aa;
+  margin-bottom: 0.5rem;
+}
+
+.hero ul {
+  list-style: none;
+  padding: 0;
+  color: #0055aa;
+}
+
+.cta {
+  background-color: #0055aa;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.hero img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 1rem;
+}
+
+.upgrades, .reviews {
+  margin-top: 2rem;
+}
+
+.upgrades h2, .reviews h2 {
+  text-align: center;
+  color: #333;
+}
+
+.upgrade-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.upgrade img {
+  width: 100px;
+  height: auto;
+}
+
+.reviews ul {
+  padding-left: 1rem;
+}
+
+
+@media screen and (min-width: 768px) {
+  .hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+
+  .hero-text {
+    max-width: 50%;
+  }
+
+  .hero-image {
+    max-width: 40%;
+  }
+
+  .upgrade-list {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
