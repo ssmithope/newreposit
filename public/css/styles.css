@@ -1,8 +1,12 @@
+/*Global variables*/
 :root {
-  --primary-color: #007bff;
-  --accent-color: #00b7eb;
+ --primary-color: #007bff; 
+  --secondary-color: #0056b3; 
   --text-color: #333;
-  --background-color: #fff;
+  --background-color: #f5f5f5;
+  --error-color: #e74c3c; 
+  --success-color: #2ecc71; 
+  --border-radius: 8px;
 }
 
 /******* Change Box Model ***************/
@@ -13,10 +17,7 @@
 }
 
 body {
-  font-family: 'Segoe UI', sans-serif;
-  margin: 0;
-  background-color: var(--background-color);
-  color: var(--text-color);
+  font-family: Arial, sans-serif;
 }
 
 header {
@@ -24,11 +25,19 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
+  width: 100%;
+  box-sizing: border-box;
+  color: black;
+  margin-bottom: 15px;
 }
 
 .siteName {
   font-size: 1.5rem;
-  font-weight: bold;
+}
+
+header a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .logIn {
@@ -36,165 +45,268 @@ header {
 }
 
 nav {
+  color: white;
   background-color: black;
   display: flex;
   justify-content: space-around;
-  padding: 10px 0;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0px 40px; 
+  margin-bottom: 15px; 
 }
 
 nav a {
   font-family: "Orbitron", sans-serif;
   color: white;
   text-decoration: none;
-  padding: 0.5rem 1rem;
 }
 
-nav a:hover {
-  background-color: #333;
-  border-radius: 5px;
+nav a:active {
+  color: white;
+  outline:none;
 }
 
-main {
-  padding: 1rem;
-  text-align: center;
+nav ul {
+  display: flex;
+  gap: 10px; 
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  justify-content: space-between;
 }
+
+nav ul li {
+  display: inline-block;
+}
+
+nav ul li:hover {
+  transform: scale(1.05);
+}
+
+h1, h2 {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+/* Mobile-Specific Adjustments */
+@media (max-width: 767px) {
+  nav {
+    padding: 0 5px; 
+    flex-direction: column;
+    align-items: center;
+  }
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 2px; 
+    justify-content: space-around;
+    width: 100%; 
+  }
+  nav ul li {
+    display: block;
+    font-size: 0.75rem; 
+    padding: 3px; 
+    width: auto;
+  }
+  .siteName {
+    font-size: 1.1rem; 
+  }
+}
+
 
 .overlay {
+  display: flex;
   position: relative;
-  margin: 2rem auto;
+  align-items: center;
   max-width: 600px;
+  margin: 0 auto;
+}
+
+.delorean-sale {
+  position: relative;
+  width: 100%;
 }
 
 .delorean-image-index {
-  width: 100%;
+  width: 90%;
   height: auto;
-  border: 3px solid #ccc;
+  display: block;
+}
+
+.delorean-image-index:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
 }
 
 .text-overlay {
   position: absolute;
-  top: 10%;
-  left: 5%;
-  background-color: rgba(255, 255, 255, 0.85);
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
-}
-
-.text-overlay h1 {
-  color: #007bff;
-  margin-bottom: 0.5rem;
+  top: 10px;
+  left: 10px;
+  color: #00b7eb;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .text-overlay ul {
-  list-style: none;
+  list-style: none; 
   padding: 0;
   margin: 0;
-  color: #007bff;
+  color: black; 
+  text-align: left;
+}
+
+.text-overlay li {
+ font-size: 18px;
+  margin-bottom: 5px;
+  color: black; 
+  text-shadow: 2px 2px 4px black;
+}
+
+.delorean-promo {
+  font-size: 20px;
   font-weight: bold;
 }
 
 .own-delorean {
-  margin-top: 1rem;
-  background-color: #00b7eb;
+background-color: lightblue;
   color: black;
-  padding: 0.5rem 1rem;
+  padding: 7px 7px;
   border: none;
-  font-family: Orbitron;
-  font-size: 1rem;
-  font-weight: bold;
   cursor: pointer;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  font-family: Orbitron;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease; 
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3); 
 }
 
 .own-delorean:hover {
+  background-color: lightblue;
   border: 2px solid #000;
   transform: scale(1.05);
 }
 
+.own-delorean:active {
+  transform: scale(0.95); 
+}
+
+.review-container {
+  max-width: 400px;
+  padding: 15px;
+}
+#delorean-reviews {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.reviews li {
+  margin-left: 0px;
+  margin-bottom: 10px;
+}
+
+.upgrades {
+  grid-column: 1/-1;
+  justify-self: start;
+}
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: -10px;
+}
+.item p {
+  margin-top: 5px;
+  margin-left: 15px;
+}
+
 .upgrade-container {
-  display: grid;
+ display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin: 2rem auto;
-  max-width: 600px;
+  grid-template-rows: auto auto;
+  gap: 10px;
+  justify-content: start;
+  text-align: left;
 }
 
 .image-container {
-  background-color: var(--accent-color);
+ background-color: #00b7eb; 
   border: 2px solid #008cba;
-  padding: 1rem;
+  padding: 20px;
+  width: 140px;
+  height: 80px;
   text-align: center;
-  border-radius: 8px;
 }
 
 .image-container img {
-  width: 60px;
+  width: 50px;
   height: auto;
-  margin-bottom: 0.5rem;
+}
+
+.image-container img:hover {
+  box-shadow: 0 0 15px #00ffcc, 0 0 30px #00ffcc;
+  transition: box-shadow 0.3s ease-in-out;
 }
 
 .review-container {
   max-width: 600px;
-  margin: 2rem auto;
-  padding: 1rem;
-  background-color: #f4f4f4;
-  border-radius: 8px;
+  margin: 20px auto;
+  padding: 15px;
 }
 
 #delorean-reviews {
-  font-size: 1.2rem;
+  font-size: 20px;
   font-weight: bold;
-  margin-bottom: 1rem;
 }
 
 .reviews {
-  font-size: 0.95rem;
+  font-size: 14px;
   list-style-type: disc;
-  padding-left: 1.5rem;
-  text-align: left;
+  padding-left: 20px;
 }
 
-footer {
-  text-align: center;
-  padding: 1rem;
-  font-size: 0.8rem;
-  background-color: #eee;
-  margin-top: 2rem;
-}
-
-/* Large screen layout */
-@media (min-width: 768px) {
+@media (min-width: 768px) { 
   body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
     background-image: url('/images/site/small_check.jpg');
+  }
+  #wrapper {
+    border: 5px solid rgb(98, 177, 203);
+    padding: 10px; 
+    border-radius: 8px;       
+    width: 80%;
+    height: 80%;
+    justify-content: center;
+    background-color: white;
     background-size: cover;
     background-position: center;
+    position: relative;
+    z-index: 10;
+    margin: 0 auto;
+    margin-top: 15px;
   }
-
-  .overlay {
+  .content-wrapper {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    align-items: center;
-    max-width: 900px;
   }
-
-  .text-overlay {
-    position: static;
-    background: none;
-    box-shadow: none;
-    padding: 0;
-    text-align: left;
-  }
-
-  .text-overlay ul {
-    color: #007bff;
-  }
-
-  .upgrade-container {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
   .review-container {
-    text-align: left;
+    order: 2;
+  }
+  .upgrade-container {
+    order: 1;
+  }
+  .reviews li {
+    padding-bottom: 15px;
+  }
+  #delorean-reviews {
+    margin-top: 0px;
+  }
+  .upgrades {
+    margin-bottom: 5px;
   }
 }
