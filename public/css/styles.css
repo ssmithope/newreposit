@@ -310,3 +310,63 @@ background-color: lightblue;
     margin-bottom: 5px;
   }
 }
+
+/* Vehicle Detail View Styles */
+.vehicle-detail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin: 2rem auto;
+  max-width: 1000px;
+  padding: 1rem;
+  background-color: var(--background-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.vehicle-detail img {
+  max-width: 100%;
+  height: auto;
+  flex: 1 1 300px;
+  border-radius: var(--border-radius);
+}
+
+.vehicle-info {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+  color: var(--text-color);
+}
+
+.vehicle-info h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.vehicle-info p {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 767px) {
+  .vehicle-detail {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .vehicle-info {
+    padding: 0.5rem;
+  }
+
+  .vehicle-info h2 {
+    font-size: 1.25rem;
+  }
+
+  .vehicle-info p {
+    font-size: 0.95rem;
+  }
+}
