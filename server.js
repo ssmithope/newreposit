@@ -2,6 +2,10 @@
  * This server.js file is the primary file of the 
  * application. It is used to control the project.
  *******************************************/
+
+const session = require("express-session")
+const pool = require('./database/')
+
 /* ***********************
  * Require Statements
  *************************/
@@ -11,10 +15,31 @@ const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute")
+const accountRoute = require("./routes/accountRoute")
 const baseRoute = require("./routes/baseRoute")
 const baseController = require("./controllers/baseController")
 const utilities = require("./utilities")
 
+/* ***********************
+ * Middleware
+ * ************************/
+ app.use(session({
+  store: new (require('connect-pg-simple')(session))({
+    createTableIfMissing: true,
+    pool,
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  name: 'sessionId',
+}))
+
+// Express Messages Middleware
+app.use(require('connect-flash')())
+app.use(function(req, res, next){
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
 
 /* ***********************
  * View Engine and Templates
@@ -40,13 +65,15 @@ app.use(static)
  * Application Routes
  *************************/
 // Base routes (home, about, etc.)
-app.use("/", baseRoute)
-
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
 
 // Inventory routes
 app.use("/inventory", inventoryRoute)
+
+// Account routes (login, register, etc.)
+app.use("/account", accountRoute)
+
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
@@ -60,7 +87,14 @@ app.use(async (req, res, next) => {
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav()
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  if(err.status == 404){ message = err.message} else {message = 'Oh no! There was a crash. Maybe try a different route?'}
+  
+  let message
+  if (err.status == 404) {
+    message = err.message
+  } else {
+    message = 'Oh no! There was a crash. Maybe try a different route?'
+  }
+
   res.render("errors/error", {
     title: err.status || 'Server Error',
     message,

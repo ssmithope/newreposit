@@ -32,7 +32,6 @@ Util.buildClassificationGrid = async function (data) {
   if (data.length > 0) {
     grid = '<ul id="inv-display">'
     data.forEach((vehicle) => {
-      // Clean up malformed image paths
       const thumbnail = vehicle.inv_thumbnail.replace(
         "/vehicles/vehicles/vehicles/",
         "/vehicles/"
@@ -95,7 +94,6 @@ Util.buildVehicleDetail = function (vehicle) {
 
   const miles = vehicle.inv_miles.toLocaleString()
 
-  // Clean up malformed image path
   const image = vehicle.inv_image.replace(
     "/vehicles/vehicles/vehicles/",
     "/vehicles/"
@@ -113,6 +111,28 @@ Util.buildVehicleDetail = function (vehicle) {
       </div>
     </section>
   `
+}
+
+/* ****************************************
+ * Build Classification Dropdown List
+ **************************************** */
+Util.buildClassificationList = async function (classification_id = null) {
+  let data = await invModel.getClassifications()
+  let classificationList =
+    '<select name="classification_id" id="classificationList" required>'
+  classificationList += "<option value=''>Choose a Classification</option>"
+  data.rows.forEach((row) => {
+    classificationList += `<option value="${row.classification_id}"`
+    if (
+      classification_id != null &&
+      row.classification_id == classification_id
+    ) {
+      classificationList += " selected"
+    }
+    classificationList += `>${row.classification_name}</option>`
+  })
+  classificationList += "</select>"
+  return classificationList
 }
 
 /* ****************************************
