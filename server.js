@@ -5,6 +5,7 @@
 
 const session = require("express-session")
 const pool = require('./database/')
+const cookieParser = require("cookie-parser")
 
 /* ***********************
  * Require Statements
@@ -34,12 +35,18 @@ const utilities = require("./utilities")
   name: 'sessionId',
 }))
 
+// Cookie parser
+app.use(cookieParser())
+
 // Express Messages Middleware
 app.use(require('connect-flash')())
 app.use(function(req, res, next){
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
+
+// JWT token
+app.use(utilities.checkJWTToken)
 
 /* ***********************
  * View Engine and Templates
@@ -69,7 +76,7 @@ app.use(static)
 app.get("/", utilities.handleErrors(baseController.buildHome))
 
 // Inventory routes
-app.use("/inventory", inventoryRoute)
+app.use("/inv", inventoryRoute)
 
 // Account routes (login, register, etc.)
 app.use("/account", accountRoute)
@@ -115,3 +122,5 @@ const host = process.env.HOST
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
 })
+
+

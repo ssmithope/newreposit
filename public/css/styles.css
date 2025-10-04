@@ -470,3 +470,18 @@ background-color: lightblue;
 .register-form button:hover {
   background-color: #0056b3;
 }
+
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#inventoryDisplay th, #inventoryDisplay td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+#inventoryDisplay th {
+  background-color: #f4f4f4;
+}

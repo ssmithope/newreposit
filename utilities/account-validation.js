@@ -64,4 +64,33 @@ validate.checkRegData = async (req, res, next) => {
   next()
 }
 
+const loginRules = () => {
+  return [
+    body("account_email")
+      .isEmail()
+      .withMessage("A valid email is required."),
+    body("account_password")
+      .trim()
+      .notEmpty()
+      .withMessage("Password is required.")
+  ]
+}
+
+const checkLoginData = (req, res, next) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    req.flash("notice", "Login failed. Please check your input.")
+    return res.render("account/login", {
+      title: "Login",
+      message: req.flash("notice"),
+      errors: errors.array(),
+      account_email: req.body.account_email
+    })
+  }
+  next()
+}
+
+validate.loginRules = loginRules
+validate.checkLoginData = checkLoginData
+
 module.exports = validate
