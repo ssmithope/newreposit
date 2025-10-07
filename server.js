@@ -14,6 +14,7 @@ const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const app = express()
+const path = require("path")
 const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute")
 const accountRoute = require("./routes/accountRoute")
@@ -24,7 +25,7 @@ const utilities = require("./utilities")
 /* ***********************
  * Middleware
  * ************************/
- app.use(session({
+app.use(session({
   store: new (require('connect-pg-simple')(session))({
     createTableIfMissing: true,
     pool,
@@ -45,7 +46,7 @@ app.use(function(req, res, next){
   next()
 })
 
-// JWT token
+// JWT token middleware
 app.use(utilities.checkJWTToken)
 
 /* ***********************
@@ -53,15 +54,16 @@ app.use(utilities.checkJWTToken)
  *************************/
 app.set("view engine", "ejs")
 app.use(expressLayouts)
-app.set("layout", "./layouts/layout") // not at views root
+app.set("layout", "./layouts/layout")
 
 /* ***********************
- * Middleware
+ * Middleware: Body parsers and static
  *************************/
-// Parse URL-encoded bodies (form submissions)
 app.use(express.urlencoded({ extended: true }))
-// Parse JSON bodies
 app.use(express.json())
+
+// Serve static assets from /public if the project includes them
+app.use(express.static(path.join(__dirname, "public")))
 
 /* ***********************
  * Routes
@@ -72,15 +74,17 @@ app.use(static)
  * Application Routes
  *************************/
 // Base routes (home, about, etc.)
-// Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
 
-// Inventory routes
+// Inventory routes mounted at both /inv and /inventory to match links/templates
 app.use("/inv", inventoryRoute)
+app.use("/inventory", inventoryRoute)
 
 // Account routes (login, register, etc.)
 app.use("/account", accountRoute)
 
+// Ignore browser favicon requests to avoid 404 noise
+app.get("/favicon.ico", (req, res) => res.sendStatus(204))
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
@@ -102,7 +106,7 @@ app.use(async (err, req, res, next) => {
     message = 'Oh no! There was a crash. Maybe try a different route?'
   }
 
-  res.render("errors/error", {
+  res.status(err.status || 500).render("errors/error", {
     title: err.status || 'Server Error',
     message,
     nav
@@ -122,4 +126,3 @@ const host = process.env.HOST || "localhost"
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
 })
-
