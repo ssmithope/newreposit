@@ -1,12 +1,13 @@
-<!-- Content Heading Section -->
-<% if (title) { %>
-  <h1><%= title %></h1>
-<% } else {
-  res.redirect('/')
-} %>
+<%- nav %>
 
-<!-- Message Block -->
-<%# messages() %>
+<h1><%= title %></h1>
 
-<!-- Inventory Items Display -->
-<%- grid %>
+<% if (message && message.length > 0) { %>
+  <div class="flash-message"><%= message %></div>
+<% } %>
+
+<% if (grid && grid.trim().length > 0) { %>
+  <%- grid %>
+<% } else { %>
+  <p class="notice">Sorry, no vehicles found in this classification.</p>
+<% } %>

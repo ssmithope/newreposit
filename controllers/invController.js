@@ -27,20 +27,21 @@ async function buildByClassificationId(req, res, next) {
   }
 }
 
+
 /* ****************************************
  * Build inventory detail view
  * **************************************** */
 async function buildDetailView(req, res, next) {
   try {
     const invId = req.params.invId
-    const data = await invModel.getInventoryById(invId)
+    const data = await invModel.getVehicleById(invId)
 
     if (!data) {
       throw { status: 404, message: "Vehicle not found." }
     }
 
     const nav = await utilities.getNav()
-    const detail = await utilities.buildDetailView(data)
+    const detail = await utilities.buildVehicleDetail(data)
 
     res.render("inventory/detail", {
       title: `${data.inv_make} ${data.inv_model}`,
@@ -150,7 +151,7 @@ async function insertInventory(req, res, next) {
 async function editInventoryView(req, res, next) {
   try {
     const invId = req.params.inv_id
-    const itemData = await invModel.getInventoryById(invId)
+    const itemData = await invModel.getVehicleById(invId)
     const nav = await utilities.getNav()
     const classificationSelect = await utilities.buildClassificationList(itemData.classification_id)
 

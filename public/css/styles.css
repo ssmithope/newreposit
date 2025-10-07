@@ -485,3 +485,87 @@ background-color: lightblue;
 #inventoryDisplay th {
   background-color: #f4f4f4;
 }
+
+
+.flash-message {
+  background-color: var(--success-color);
+  color: white;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: var(--border-radius);
+  font-weight: bold;
+}
+
+.error-list {
+  background-color: var(--error-color);
+  color: white;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: var(--border-radius);
+}
+
+.error-list ul {
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.error-list li {
+  list-style-type: disc;
+}
+
+
+.form-section {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-section h2 {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  color: var(--primary-color);
+}
+
+.form-section form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-section label {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.form-section input[type="text"],
+.form-section input[type="email"],
+.form-section input[type="password"] {
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-section input[type="submit"] {
+  margin-top: 1.5rem;
+  padding: 0.75rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-section input[type="submit"]:hover {
+  background-color: var(--secondary-color);
+}
+
+
+input:focus,
+button:focus,
+a:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}

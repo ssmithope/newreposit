@@ -1,18 +1,17 @@
-// Required modules
 const express = require('express')
 const router = express.Router()
 const utilities = require('../utilities')
 const accountController = require('../controllers/accountController')
-const regValidate = require('../utilities/account-validation') // for login/register
-const updateValidate = require('../utilities/account-update-validation') // for update/password
+const regValidate = require('../utilities/account-validation')
+const updateValidate = require('../utilities/account-update-validation')
 
-// Route to deliver login view
+// Login view
 router.get('/login', utilities.handleErrors(accountController.buildLogin))
 
-// Registration view route
+// Registration view
 router.get('/register', utilities.handleErrors(accountController.buildRegister))
 
-// Registration POST route
+// Registration POST
 router.post(
   "/register",
   regValidate.registrationRules(),
@@ -20,7 +19,7 @@ router.post(
   utilities.handleErrors(accountController.registerAccount)
 )
 
-// Process the login request
+// Login POST
 router.post(
   "/login",
   regValidate.loginRules(),
@@ -28,31 +27,33 @@ router.post(
   utilities.handleErrors(accountController.accountLogin)
 )
 
-// Default account management view
+// Account management view
 router.get(
   "/",
   utilities.checkLogin,
   utilities.handleErrors(accountController.buildAccountManagement)
 )
 
-// Route to deliver account update view
+// Account update view
 router.get(
   "/update/:account_id",
   utilities.checkLogin,
   utilities.handleErrors(accountController.buildUpdateView)
 )
 
-// Route to process account info update
+// Account info update POST
 router.post(
   "/update",
+  utilities.checkLogin,
   updateValidate.updateAccountRules(),
   updateValidate.checkUpdateData,
   utilities.handleErrors(accountController.updateAccount)
 )
 
-// Route to process password update
+// Password update POST
 router.post(
   "/update-password",
+  utilities.checkLogin,
   updateValidate.passwordRules(),
   updateValidate.checkPasswordData,
   utilities.handleErrors(accountController.updatePassword)
@@ -65,5 +66,4 @@ router.get("/logout", (req, res) => {
   res.redirect("/")
 })
 
-// Export the router
 module.exports = router
