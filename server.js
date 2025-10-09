@@ -66,6 +66,9 @@ app.use("/inv", inventoryRoute)
 // Account routes
 app.use("/account", require("./routes/accountRoute"))
 
+// Favicon inactive
+app.get('/favicon.ico', (req, res) => res.status(204));
+
 /* ***********************
  * File Not Found Route - must be last route in list
  *************************/
