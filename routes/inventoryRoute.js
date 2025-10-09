@@ -1,73 +1,64 @@
+// Needed Resources 
 const express = require("express")
-const router = new express.Router()
+const router = new express.Router() 
 const invController = require("../controllers/invController")
-const utilities = require("../utilities")
-const invValidate = require("../utilities/inventory-validation")
-const { checkEmployeeOrAdmin } = require("../utilities/account-middleware")
+const utilities = require('../utilities')
 
-// Public route: Build inventory by classification ID
+// Route to build inventory by classification view
 router.get(
   "/type/:classificationId",
   utilities.handleErrors(invController.buildByClassificationId)
 )
 
-// Public route: Build inventory item detail view
+// Route to show vehicle details by inv_id
 router.get(
   "/detail/:invId",
-  utilities.handleErrors(invController.buildDetailView)
+  utilities.handleErrors(invController.showVehicleDetail)
 )
 
-// Protected route: Inventory management dashboard
+// Management view
 router.get(
   "/",
-  utilities.checkLogin,
   utilities.handleErrors(invController.buildManagementView)
 )
 
-// Protected route: Add classification form
+// Add classification
 router.get(
   "/add-classification",
-  checkEmployeeOrAdmin,
-  utilities.handleErrors(invController.buildAddClassification)
+  invController.showAddClassification
 )
+
 router.post(
   "/add-classification",
-  checkEmployeeOrAdmin,
-  utilities.handleErrors(invController.insertClassification)
+  utilities.handleErrors(invController.addClassification)
 )
 
-// Protected route: Add inventory form
-router.get(
-  "/add-inventory",
-  checkEmployeeOrAdmin,
-  utilities.handleErrors(invController.buildAddInventory)
-)
-router.post(
-  "/add-inventory",
-  checkEmployeeOrAdmin,
-  utilities.handleErrors(invController.insertInventory)
-)
-
-// Protected route: Edit inventory view
-router.get(
-  "/edit/:inv_id",
-  checkEmployeeOrAdmin,
-  utilities.handleErrors(invController.editInventoryView)
-)
-
-// Protected route: Update inventory item
-router.post(
-  "/update",
-  checkEmployeeOrAdmin,
-  invValidate.newInventoryRules(),
-  invValidate.checkUpdateData,
-  utilities.handleErrors(invController.updateInventory)
-)
-
-// Public route: Get inventory JSON by classification
+// Get inventory JSON
 router.get(
   "/getInventory/:classification_id",
   utilities.handleErrors(invController.getInventoryJSON)
+)
+
+// Edit inventory
+router.get(
+  "/edit/:inv_id",
+  utilities.handleErrors(invController.editInventoryView)
+)
+
+router.post(
+  "/update/",
+  utilities.handleErrors(invController.updateInventory)
+)
+
+// Add inventory
+router.get(
+  "/add-inventory",
+  invController.addInventory
+)
+
+router.post(
+  "/add-inventory",
+  utilities.handleErrors(invController.addInventory)
 )
 
 module.exports = router

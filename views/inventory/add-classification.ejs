@@ -1,18 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Add Classification</title>
-</head>
-<body>
-  <h1>Add New Classification</h1>
-  <% if (message) { %>
-    <p><%= message %></p>
-  <% } %>
-  <form action="/inventory/add-classification" method="post">
-    <label for="classification_name">Classification Name:</label>
-    <input type="text" id="classification_name" name="classification_name" required pattern="^[A-Za-z0-9]+$">
-    <button type="submit">Add Classification</button>
-  </form>
-</body>
-</html>
+    <h1>Add Vehicle Classification</h1>
+    <% if (flash) { %>
+        <div class="flash-message"><%= flash %></div>
+    <% } %>
+    <% if (errors) { %>
+        <div class="error-messages">
+            <% errors.forEach(function(error) { %>
+                <p><%= error.msg %></p>
+            <% }); %>
+        </div>
+    <% } %>
+    
+    
+    
+    <div class="login-container"> 
+        <div class="form-comment"><p>FIELD IS REQUIRED</p></div>
+        <form name="addClassificationForm" action="/inv/add-classification" method="POST" onsubmit="return validateForm()">
+            <p>NAME MUST BE ALPHABETIC CHARACTERS ONLY</p>
+            <label for="classification">Classification Name:</label>
+            <input type="text" id="classification" name="classification_name" required pattern="[A-Za-z\s]+" required value="<%= locals.classification_name %>">
+            <button class="btn" type="submit">Add Classification</button>
+        </form>
+    </div>

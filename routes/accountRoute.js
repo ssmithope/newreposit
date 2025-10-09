@@ -1,69 +1,82 @@
-const express = require('express')
-const router = express.Router()
-const utilities = require('../utilities')
-const accountController = require('../controllers/accountController')
-const regValidate = require('../utilities/account-validation')
-const updateValidate = require('../utilities/account-update-validation')
+const express = require("express");
+const router = new express.Router();
+const accountController = require("../controllers/accountController");
+const utilities = require("../utilities");
+const regValidate = require('../utilities/account-validation');
 
-// Login view
-router.get('/login', utilities.handleErrors(accountController.buildLogin))
+/* ********************************************
+* Deliver Login View
+********************************************* */
+router.get("/login", utilities.handleErrors(accountController.buildLogin));
 
-// Registration view
-router.get('/register', utilities.handleErrors(accountController.buildRegister))
-
-// Registration POST
-router.post(
-  "/register",
-  regValidate.registrationRules(),
-  regValidate.checkRegData,
-  utilities.handleErrors(accountController.registerAccount)
-)
-
-// Login POST
+/* ********************************************
+* Process the login request
+********************************************* */
 router.post(
   "/login",
   regValidate.loginRules(),
   regValidate.checkLoginData,
   utilities.handleErrors(accountController.accountLogin)
-)
+);
 
-// Account management view
+/* ********************************************
+* Deliver Registration View
+********************************************* */
+router.get("/register", utilities.handleErrors(accountController.buildRegister));
+
+/* ********************************************
+* Register Account
+********************************************* */
+router.post(
+  "/register",
+  regValidate.registrationRules(),
+  regValidate.checkRegData,
+  utilities.handleErrors(accountController.registerAccount)
+);
+
+/* ********************************************
+* Account Management View
+********************************************* */
 router.get(
-  "/",
-  utilities.checkLogin,
+  "/accountManagement",
+  utilities.checkLogin, // must be logged in
   utilities.handleErrors(accountController.buildAccountManagement)
-)
+);
 
-// Account update view
+/* ********************************************
+* Update Account View
+********************************************* */
 router.get(
   "/update/:account_id",
   utilities.checkLogin,
-  utilities.handleErrors(accountController.buildUpdateView)
-)
+  utilities.handleErrors(accountController.buildUpdate)
+);
 
-// Account info update POST
+/* ********************************************
+* Process Account Update
+********************************************* */
 router.post(
   "/update",
   utilities.checkLogin,
-  updateValidate.updateAccountRules(),
-  updateValidate.checkUpdateData,
+  regValidate.updateRules(),
+  regValidate.checkUpdateData,
   utilities.handleErrors(accountController.updateAccount)
-)
+);
 
-// Password update POST
+/* ********************************************
+* Process Password Update
+********************************************* */
 router.post(
   "/update-password",
   utilities.checkLogin,
-  updateValidate.passwordRules(),
-  updateValidate.checkPasswordData,
+  regValidate.passwordRules(),
+  regValidate.checkPasswordData,
   utilities.handleErrors(accountController.updatePassword)
-)
+);
 
-// Logout route
-router.get("/logout", (req, res) => {
-  res.clearCookie("jwt")
-  req.flash("notice", "You have logged out.")
-  res.redirect("/")
-})
+/* ********************************************
+* Logout
+********************************************* */
+router.get("/logout", accountController.logout);
 
-module.exports = router
+module.exports = router;

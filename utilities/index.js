@@ -16,9 +16,19 @@ Util.getNav = async function () {
 
     let list = "<ul>"
     list += '<li><a href="/" title="Home page">Home</a></li>'
-    data.forEach((row) => {
-      list += `<li><a href="/inventory/type/${row.classification_id}" title="See our inventory of ${row.classification_name} vehicles">${row.classification_name}</a></li>`
+
+    // The order: Custom → Sport → SUV → Truck → Sedan
+    const order = ["Custom", "Sport", "SUV", "Truck", "Sedan"]
+
+    order.forEach(name => {
+      const row = data.find(c => c.classification_name === name)
+      if (row) {
+        list += `<li><a href="/inv/type/${row.classification_id}" 
+                  title="See our inventory of ${row.classification_name} vehicles">
+                  ${row.classification_name}</a></li>`
+      }
     })
+
     list += "</ul>"
     return list
   } catch (error) {
@@ -41,13 +51,13 @@ Util.buildInventoryGrid = async function (data) {
       ) || vehicle.inv_thumbnail
 
       grid += `<li>
-        <a href="/inventory/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
+        <a href="/inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
           <img src="${thumbnail}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model} on CSE Motors" />
         </a>
         <div class="namePrice">
           <hr />
           <h2>
-            <a href="/inventory/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
+            <a href="/inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">
               ${vehicle.inv_make} ${vehicle.inv_model}
             </a>
           </h2>

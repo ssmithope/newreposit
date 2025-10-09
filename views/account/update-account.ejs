@@ -1,52 +1,47 @@
-<%- nav %>
+<% include ../partials/head %>
+<% include ../partials/header %>
 
 <h1><%= title %></h1>
 
-<!-- Flash Message -->
-<% if (message) { %>
-  <div class="flash-message"><%= message %></div>
+<% if (errors && errors.length) { %>
+  <ul class="errors">
+    <% errors.forEach(function(err) { %>
+      <li><%= err.msg %></li>
+    <% }) %>
+  </ul>
 <% } %>
 
-<!-- Validation Errors -->
-<% if (errors && errors.length > 0) { %>
-  <div class="error-list">
-    <ul>
-      <% errors.forEach(error => { %>
-        <li><%= error.msg %></li>
-      <% }) %>
-    </ul>
-  </div>
+<% if (message && message.length) { %>
+  <div class="message"><%= message %></div>
 <% } %>
 
-<!-- Account Update Form -->
-<section class="form-section">
-  <h2>Update Account Information</h2>
-  <form action="/account/update" method="post">
-    <label for="firstname">First Name:</label>
-    <input type="text" id="firstname" name="account_firstname" value="<%= account_firstname || '' %>" required>
+<h2>Account Update</h2>
+<form method="post" action="/account/update" novalidate>
+  <input type="hidden" name="account_id" value="<%= account_id %>">
 
-    <label for="lastname">Last Name:</label>
-    <input type="text" id="lastname" name="account_lastname" value="<%= account_lastname || '' %>" required>
+  <label for="account_firstname">First Name</label>
+  <input id="account_firstname" name="account_firstname" required value="<%= account_firstname || '' %>">
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="account_email" value="<%= account_email || '' %>" required>
+  <label for="account_lastname">Last Name</label>
+  <input id="account_lastname" name="account_lastname" required value="<%= account_lastname || '' %>">
 
-    <input type="hidden" name="account_id" value="<%= account_id %>">
-    <input type="submit" value="Update Account">
-  </form>
-</section>
+  <label for="account_email">Email</label>
+  <input id="account_email" type="email" name="account_email" required value="<%= account_email || '' %>">
 
-<!-- Password Change Form -->
-<section class="form-section">
-  <h2>Change Password</h2>
-  <form action="/account/update-password" method="post">
-    <label for="password">New Password:</label>
-    <input type="password" id="password" name="account_password" required autocomplete="off">
-    <p class="password-hint">
-      Password must be at least 12 characters and contain a number, uppercase letter, and special character.
-    </p>
+  <input type="submit" value="Update Account">
+</form>
 
-    <input type="hidden" name="account_id" value="<%= account_id %>">
-    <input type="submit" value="Change Password">
-  </form>
-</section>
+<hr>
+
+<h2>Change Password</h2>
+<p>Password must be at least 12 characters and include uppercase, lowercase, a number, and a symbol.</p>
+<form method="post" action="/account/update-password" novalidate>
+  <input type="hidden" name="account_id" value="<%= account_id %>">
+
+  <label for="account_password">New Password</label>
+  <input id="account_password" name="account_password" type="password" required>
+
+  <input type="submit" value="Change Password">
+</form>
+
+<% include ../partials/footer %>

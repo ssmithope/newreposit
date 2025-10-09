@@ -1,8 +1,19 @@
-<h2>Welcome <%= account_firstname %></h2>
+<h1><%= title %></h1>
 
-<p><a href="/account/update/<%= account_id %>">Update Account Information</a></p>
+<% if (message && message.length) { %>
+  <div class="flash"><%= message %></div>
+<% } %>
 
-<% if (account_type === "Employee" || account_type === "Admin") { %>
-  <h3>Inventory Management</h3>
-  <p><a href="/inv/">Manage Inventory</a></p>
+<% if (accountData) { %>
+  <h2>Welcome <%= accountData.account_firstname %></h2>
+
+  <!-- Update account link (always shown) -->
+  <p>
+    <a href="/account/update/<%= accountData.account_id %>">Update account information</a>
+  </p>
+
+  <% if (accountData.account_type === 'Employee' || accountData.account_type === 'Admin') { %>
+    <h3>Inventory Management</h3>
+    <p><a href="/inv/">Manage Inventory</a></p>
+  <% } %>
 <% } %>

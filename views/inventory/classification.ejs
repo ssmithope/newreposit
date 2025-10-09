@@ -1,13 +1,9 @@
-<%- nav %>
-
-<h1><%= title %></h1>
-
-<% if (message && message.length > 0) { %>
-  <div class="flash-message"><%= message %></div>
+<% if (title) { %>
+  <h1><%= title %></h1>
 <% } %>
 
-<% if (grid && grid.trim().length > 0) { %>
-  <%- grid %>
-<% } else { %>
-  <p class="notice">Sorry, no vehicles found in this classification.</p>
-<% } %>
+<!-- Inventory Items Display -->
+<%- grid %>
+
+<!-- Optional: Message Block for feedback (if you want to display messages dynamically) -->
+<%# messages() %>
