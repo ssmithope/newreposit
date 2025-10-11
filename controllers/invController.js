@@ -1,5 +1,7 @@
 const invModel = require("../models/inventory-model");
 const utilities = require("../utilities/");
+const CommentModel = require("../models/comment-model");
+
 const invCont = {};
 
 /* ***************************
@@ -21,28 +23,36 @@ invCont.buildByClassificationId = async function (req, res, next) {
 };
 
 /* ***************************
- *  Show vehicle detail
+ *  Show vehicle detail (ENHANCED with comments)
  * ************************** */
 invCont.showVehicleDetail = async function (req, res, next) {
   try {
-    const inv_id = req.params.invId;
+    const inv_id = Number(req.params.invId);
     console.log(`Querying database for inv_id: ${inv_id}`);
-    const vehicleData = await invModel.getVehicleByInvId(inv_id);
-    console.log("Vehicle Data in Controller:", vehicleData);
 
-    if (!vehicleData) {
+    const vehicle = await invModel.getVehicleByInvId(inv_id);
+    if (!vehicle) {
       req.flash("notice", "Vehicle not found.");
       return res.redirect("/inv");
     }
 
+    // Fetch comments and average rating
+    const comments = await CommentModel.getCommentsByVehicle(inv_id);
+    const { avg_rating, total_reviews } = await CommentModel.getAverageRating(inv_id);
+
     let nav = await utilities.getNav();
-    const detailHtml = utilities.buildVehicleDetail(vehicleData);
+    const detailHtml = utilities.buildVehicleDetail(vehicle);
 
     res.render("inventory/detail", {
-      title: `${vehicleData.inv_make} ${vehicleData.inv_model}`,
+      title: `${vehicle.inv_make} ${vehicle.inv_model}`,
       nav,
       detailHtml,
-      message: req.flash("notice"),
+      vehicle,
+      comments,
+      avg_rating,
+      total_reviews,
+      account: req.session.account || null,
+      messages: req.flash(),
     });
   } catch (error) {
     console.error("Error in showVehicleDetail:", error);
@@ -54,7 +64,6 @@ invCont.showVehicleDetail = async function (req, res, next) {
  *  Management view
  * ************************** */
 invCont.buildManagementView = async function (req, res, next) {
-  console.log("Building management view");
   let nav = await utilities.getNav();
   const classifications = await invModel.getClassifications();
   const classificationSelect = await utilities.buildClassificationList(classifications);
@@ -115,7 +124,6 @@ invCont.addInventory = async function (req, res, next) {
         inv_color,
       });
       req.flash("info", "Vehicle added successfully.");
-      nav = await utilities.getNav();
       res.redirect("/inv");
     } catch (err) {
       errors.push({ msg: err.message });
@@ -155,7 +163,6 @@ invCont.addClassification = async function (req, res, next) {
     try {
       await invModel.insertClassification(classification_name);
       req.flash("info", "Classification added successfully.");
-      nav = await utilities.getNav();
       res.redirect("/inv");
     } catch (err) {
       errors.push({ msg: err.message });

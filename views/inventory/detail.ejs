@@ -1,16 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-  <main>
-    <h1><%= title %></h1>
 
-    <%- detailHtml %>
+<h1><%= title %></h1>
 
-  </main>
-</body>
-</html>
+<section class="vehicle-detail">
+  <%- detailHtml %>
+</section>
+
+<%- include('../partials/flash-messages') %>
+
+<%- include('../partials/reviews', { 
+      vehicle, 
+      comments, 
+      avg_rating, 
+      total_reviews, 
+      account, 
+      messages 
+}) %>

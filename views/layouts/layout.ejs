@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('../partials/head', { title: title }) %>
-
-<body>
+  <%- include('../partials/head', { title: title }) %>
+  <body>
     <div id="wrapper">
-        <%- include('../partials/header') %>
-        <%- include ('../partials/navigation') %>
+      <%- include('../partials/header') %>
+      <%- include('../partials/navigation') %>
 
-        <main>
-            <%- body %>
-        </main>
+      <main>
+        <%- body %>
+      </main>
 
-        <%- include('../partials/footer') %>
+      <%- include('../partials/footer') %>
     </div>
+
+    <!-- Global scripts -->
     <script src="/js/script.js"></script>
     <script src="/js/inventory.js"></script>
-    
-</body>
+    <script src="/js/reviews.js" defer></script>
+
+    <!-- Global styles -->
+    <link rel="stylesheet" href="/css/reviews.css">
+  </body>
 </html>

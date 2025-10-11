@@ -569,3 +569,22 @@ a:focus {
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;
 }
+
+/* reviews */
+.reviews { margin-top: 2rem; }
+.review-form { display: grid; gap: .5rem; max-width: 600px; margin-bottom: 1rem; }
+.review-list { list-style: none; padding: 0; display: grid; gap: 1rem; }
+.review-item { border: 1px solid #ddd; padding: .75rem; border-radius: .5rem; background: #fff; }
+.inline-form { display: inline; margin-left: .5rem; }
+.alert { padding: .5rem .75rem; border-radius: .25rem; margin: .5rem 0; }
+.alert-warning { background: #fff4e5; border: 1px solid #ffd29b; }
+.alert-success { background: #eaffea; border: 1px solid #9fe29f; }
+
+.alert {
+  padding: .5rem .75rem;
+  border-radius: .25rem;
+  margin: .5rem 0;
+}
+.alert-warning { background: #fff4e5; border: 1px solid #ffd29b; }
+.alert-success { background: #eaffea; border: 1px solid #9fe29f; }
+.alert-info { background: #e7f3fe; border: 1px solid #8ecae6; }

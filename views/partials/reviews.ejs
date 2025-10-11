@@ -1,0 +1,50 @@
+<!-- Reviews -->
+<section id="reviews" class="reviews">
+  <h2>Reviews</h2>
+
+  <% if (typeof avg_rating !== 'undefined') { %>
+    <p><strong>Average rating:</strong> <%= avg_rating %> / 5 (<%= total_reviews %> reviews)</p>
+  <% } %>
+
+  <% if (account) { %>
+    <form action="/comments/add" method="POST" class="review-form" novalidate>
+      <input type="hidden" name="vehicleId" value="<%= vehicle.inv_id %>">
+      <label for="rating"><strong>Rating:</strong></label>
+      <select name="rating" id="rating" required>
+        <option value="">Select rating</option>
+        <option value="5">5 - Excellent</option>
+        <option value="4">4 - Good</option>
+        <option value="3">3 - Average</option>
+        <option value="2">2 - Below Avg</option>
+        <option value="1">1 - Poor</option>
+      </select>
+
+      <label for="commentText"><strong>Comment:</strong></label>
+      <textarea id="commentText" name="commentText" rows="3" minlength="3" maxlength="2000" required></textarea>
+
+      <button type="submit">Submit review</button>
+    </form>
+  <% } else { %>
+    <p><em>Please <a href="/account/login">sign in</a> to leave a review.</em></p>
+  <% } %>
+
+  <ul class="review-list">
+    <% if (comments && comments.length) { %>
+      <% comments.forEach(c => { %>
+        <li class="review-item">
+          <p><strong><%= c.author_name %></strong> — <%= c.rating %> / 5</p>
+          <p><%= c.comment_text %></p>
+          <small><%= new Date(c.created_at).toLocaleString() %></small>
+
+          <% if (account && account.account_id === c.account_id) { %>
+            <form action="/comments/delete/<%= c.comment_id %>?vehicleId=<%= vehicle.inv_id %>" method="POST" class="inline-form">
+              <button type="submit">Delete</button>
+            </form>
+          <% } %>
+        </li>
+      <% }) %>
+    <% } else { %>
+      <li>No reviews yet. Be the first to share your thoughts!</li>
+    <% } %>
+  </ul>
+</section>

@@ -45,3 +45,27 @@ When you installed Git and cloned the remote repository in week 1, you should ha
 1. Go to http://localhost:5500 in a browser tab. Nothing should be visible as the server has not been setup to repond to that route.
 2. Add "/filename.html" to the end of the URL (replacing filename with the name of the file you moved to the public folder).
 3. You should see that page in the browser.
+
+## Week 6 Enhancement: Vehicle Reviews (Comments + Ratings)
+
+- Adds a `comments` table with ratings and text reviews per vehicle.
+- New files:
+  - database/sql/06_create_comments.sql
+  - database/sql/07_seed_comments.sql (optional)
+  - models/comment-model.js
+  - controllers/commentController.js
+  - routes/commentRoute.js
+  - utilities/comment-validation.js
+  - views/partials/reviews.ejs
+  - public/css/reviews.css
+  - public/js/reviews.js
+- Updates:
+  - server.js (mount routes and flash/session support)
+  - views/inventory/detail.ejs (render reviews)
+  - views/layouts/layout.ejs (link CSS and JS)
+
+### How to use
+1. Log in or register an account.
+2. Navigate to any vehicle detail page: `/inv/detail/:invId`.
+3. Submit a star rating (1–5) and a comment.
+4. Delete your own comment via the “Delete” button.

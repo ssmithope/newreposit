@@ -1,0 +1,9 @@
+<% if (messages && messages.notice) { %>
+  <div class="alert alert-warning"><%= messages.notice.join(' ') %></div>
+<% } %>
+<% if (messages && messages.success) { %>
+  <div class="alert alert-success"><%= messages.success.join(' ') %></div>
+<% } %>
+<% if (messages && messages.info) { %>
+  <div class="alert alert-info"><%= messages.info.join(' ') %></div>
+<% } %>
