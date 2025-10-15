@@ -69,3 +69,6 @@ When you installed Git and cloned the remote repository in week 1, you should ha
 2. Navigate to any vehicle detail page: `/inv/detail/:invId`.
 3. Submit a star rating (1–5) and a comment.
 4. Delete your own comment via the “Delete” button.
+
+Enhancement Description: 
+For Week 6, I implemented a vehicle review feature that allows users to submit star ratings and written comments for individual vehicles. This enhancement included creating a new comments table in the database, building out the model, controller, and route logic, and integrating the review form into the vehicle detail page. I also added front-end validation, styling for the review section, and functionality for users to delete their own comments. This feature improves user engagement and adds valuable feedback capabilities to the application.
